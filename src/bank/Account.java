@@ -1,5 +1,6 @@
 package bank;
 
+import java.util.List;
 import java.util.Random;
 
 public class Account {
@@ -10,6 +11,8 @@ public class Account {
 	private String AccountName;
 	private int AccountNum;
 	private int Balance;
+	private List<Transaction> transactions;
+	private long SessionID;
 	//for getting account number
 	private static int nextAccNum=0;
 	
@@ -49,14 +52,26 @@ public class Account {
 		return Balance;
 	}
 	
+	public long GetSessionID(){
+		return SessionID;
+	}
+	
+	//setter
+	public void SetSessionID(long session){
+		SessionID=session;
+	}
+	
 	//Functions
 	public void Deposit(int amount){
 		Balance = Balance + amount;
+		Transaction transaction = new Transaction("Deposit",amount,Balance);
+		transactions.add(transaction);
 	}
 	
 	public void Withdraw(int amount){
 		Balance = Balance - amount;
+		Transaction transaction = new Transaction("Withdraw",amount,Balance);
+		transactions.add(transaction);
 	}
-	
-	
+		
 }

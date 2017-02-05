@@ -5,6 +5,22 @@ import java.util.List;
 
 public class Statment implements StatmentInterface{
 
+	//variables
+	private int Accountnum;
+	private Date StartDate;
+	private Date EndDate;
+	private String AcountName;
+	private List<Transaction> Transactions;
+	
+	//constructor 
+	public Statment(Date start, Date end,Account account){
+		StartDate = start;
+		EndDate = end;
+		//details from account
+		Accountnum = account.GetAccountNum();
+		
+	}
+	
 	@Override
 	public int getAccountnum() {
 		// TODO Auto-generated method stub

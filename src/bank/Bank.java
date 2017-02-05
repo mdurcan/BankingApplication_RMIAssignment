@@ -3,43 +3,98 @@ package bank;
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.rmi.server.UnicastRemoteObject;
 
 public class Bank extends UnicastRemoteObject implements BankInterface{
-
 	
 	
 	private List<Account> accounts;
+	//for getting random session number
+	private Random random = new Random();
+	
 	
 	public Bank() throws RemoteException{
 		
 	}
 	
-	@Override
+	
 	public long login(String username, String password) throws RemoteException, InvalidLogin {
-		// TODO Auto-generated method stub
-		return 0;
+		//looks to find the account
+		for(Account account : accounts){
+			//finds the account
+			if(username.equals(account.GetUserName())){
+				//checks if the password match
+				if(password.equals(account.GetPassword())){
+					//creates and set the session id
+					long session = random.nextLong();
+					account.SetSessionID(session);
+					return session;					
+				}else{
+					//unable to log in
+					throw new InvalidLogin();
+				}
+			}
+		}
+		//no account to login into
+		throw new InvalidLogin();
 	}
 
-	@Override
+	
 	public void deposit(int accountnum, int amount, long sessionID) throws RemoteException, InvalidSession {
-		// TODO Auto-generated method stub
-		
+		//finds account
+		for(Account account : accounts){
+			//using the account number
+			if(accountnum == account.GetAccountNum()){
+				//check if session number match
+				if(sessionID == account.GetSessionID()){
+					//deposit to account
+					account.Deposit(amount);
+					return;
+				}else{
+					throw new InvalidSession();
+				}
+			}
+		}
 	}
 
-	@Override
+	
 	public void withdraw(int accountnum, int amount, long sessionID) throws RemoteException, InvalidSession {
-		// TODO Auto-generated method stub
-		
+		//finds account
+		for(Account account : accounts){
+			//using the account number
+			if(accountnum == account.GetAccountNum()){
+				//check if session number match
+				if(sessionID == account.GetSessionID()){
+					//deposit to account
+					account.Withdraw(amount);
+					return;
+				}else{
+					throw new InvalidSession();
+				}
+			}
+		}
 	}
 
-	@Override
+	
 	public int inquiry(int accountnum, long sessionID) throws RemoteException, InvalidSession {
-		// TODO Auto-generated method stub
-		return 0;
+		//finds account
+		for(Account account : accounts){
+			//using the account number
+			if(accountnum == account.GetAccountNum()){
+				//check if session number match
+				if(sessionID == account.GetSessionID()){
+					//return the balance
+					return account.GetBalance();
+				}else{
+					throw new InvalidSession();
+				}
+			}
+		}
+		throw new InvalidSession();
 	}
 
-	@Override
+	
 	public Statment getStatement(Date from, Date to, long sessionID) throws RemoteException, InvalidSession {
 		// TODO Auto-generated method stub
 		return null;
