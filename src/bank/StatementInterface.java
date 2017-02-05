@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public interface StatmentInterface extends Serializable{
+public interface StatementInterface extends Serializable{
 	
 	public int getAccountnum();
 	public Date getStartDate();

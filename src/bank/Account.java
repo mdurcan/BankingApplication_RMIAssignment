@@ -1,5 +1,7 @@
 package bank;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -72,6 +74,19 @@ public class Account {
 		Balance = Balance - amount;
 		Transaction transaction = new Transaction("Withdraw",amount,Balance);
 		transactions.add(transaction);
+	}
+	
+	public List<Transaction> GetTransactions(Date start, Date end){
+		//list to return 
+		List<Transaction> newList = new ArrayList<Transaction>();
+		//gets the transaction
+		for(Transaction transaction : transactions){
+			// getting the transaction between the dates
+			if(start.after(transaction.GetDate()) && end.before(transaction.GetDate())){
+				newList.add(transaction);
+			}
+		}
+		return newList;
 	}
 		
 }

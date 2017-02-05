@@ -95,9 +95,21 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 	}
 
 	
-	public Statment getStatement(Date from, Date to, long sessionID) throws RemoteException, InvalidSession {
-		// TODO Auto-generated method stub
-		return null;
+	public Statement getStatement(int accountnum, Date from, Date to, long sessionID) throws RemoteException, InvalidSession {
+		//finds account
+		for(Account account : accounts){
+			//using the account number
+			if(accountnum == account.GetAccountNum()){
+				if(sessionID == account.GetSessionID()){
+					//creates the statement
+					Statement statement = new Statement(from, to, account);
+					return statement;
+				}else{
+					throw new InvalidSession();
+				}
+			}
+		}
+		throw new InvalidSession();
 	}
 	
 	public static void main(String args[]) throws Exception{
