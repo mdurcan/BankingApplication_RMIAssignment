@@ -13,7 +13,7 @@ public class Account {
 	private String AccountName;
 	private int AccountNum;
 	private int Balance;
-	private List<Transaction> transactions;
+	private List<Transaction> transactions = new ArrayList<Transaction>();
 	private long SessionID;
 	//for getting account number
 	private static int nextAccNum=0;

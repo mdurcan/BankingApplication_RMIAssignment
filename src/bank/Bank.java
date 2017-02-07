@@ -3,6 +3,7 @@ package bank;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -11,7 +12,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class Bank extends UnicastRemoteObject implements BankInterface{
 	
 	
-	private List<Account> accounts;
+	private List<Account> accounts= new ArrayList<Account>();
 	//for getting random session number
 	private Random random = new Random();
 	
@@ -125,16 +126,14 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 			object.accounts.add(new Account("user4","xyz","user4"));
 			object.accounts.add(new Account("user5","password","user5"));
 			
-			BankInterface stub = (BankInterface) UnicastRemoteObject.exportObject(object, 0);
+			//BankInterface stub = (BankInterface) UnicastRemoteObject.exportObject(object, 0);
 			
 			//set registry, bind stub to it
 			Registry registry = LocateRegistry.getRegistry();
-            registry.bind("Bank", stub);
+            registry.bind("Bank", object);
 
-            System.err.println("Server ready");
-			while(true){
-				
-			}
+            System.out.println("Server ready");
+			
 		}catch(Exception e){
 			System.err.println("Server exception: " + e.toString());
             e.printStackTrace();
