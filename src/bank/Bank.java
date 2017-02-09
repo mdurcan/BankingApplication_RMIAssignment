@@ -31,6 +31,11 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 				if(password.equals(account.GetPassword())){
 					//creates and set the session id
 					long session = random.nextLong();
+					//if 0 add 1
+					if(session == 0){
+						session++;
+					}
+					//set and return session id
 					account.SetSessionID(session);
 					return session;					
 				}else{
