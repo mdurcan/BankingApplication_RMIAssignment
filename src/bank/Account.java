@@ -17,6 +17,8 @@ public class Account {
 	private long SessionID;
 	//for getting account number
 	private static int nextAccNum=0;
+	//checking if session is still usable
+	private Date dateOfSession;
 	
 	//Constructor
 	public Account(String username, String password, String accName){
@@ -55,11 +57,20 @@ public class Account {
 	}
 	
 	public long GetSessionID(){
+		//see how long has passed since session started
+		long timeLasped = (dateOfSession.getTime()-new Date().getTime())/(60*1000)%60;
+		//if more then 5 minutes the session ends
+		if(timeLasped>=5){
+			System.err.println("session has timed out");
+			SessionID=0;
+		}
 		return SessionID;
 	}
 	
 	//setter
 	public void SetSessionID(long session){
+		//session started
+		dateOfSession=new Date();
 		SessionID=session;
 	}
 	
