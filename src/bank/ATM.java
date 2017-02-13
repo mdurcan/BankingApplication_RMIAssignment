@@ -8,7 +8,7 @@ public class ATM {
 	public static void main( String args[]) throws Exception{
 		String hostname = (args.length < 1) ? "localhost" : args[0]; // Set default hostname to 'localhost' if none is specified
 		int hostport = (args.length < 1) ? 7777 : Integer.parseInt(args[1]);	// Set default hostport to 7777 if none is specified
-		String operation = (args.length < 1) ? null : args[2];
+		String operation = (args.length < 1) ? "" : args[2];
 		
         try {
             Registry registry = LocateRegistry.getRegistry(hostname, hostport);
