@@ -16,11 +16,9 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 	//for getting random session number
 	private Random random = new Random();
 	
-	
 	public Bank() throws RemoteException{
 		
 	}
-	
 	
 	public long login(String username, String password) throws RemoteException, InvalidLogin {
 		//looks to find the account
@@ -128,8 +126,10 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 			
 			//BankInterface stub = (BankInterface) UnicastRemoteObject.exportObject(object, 0);
 			
+			String host = (args.length < 1) ? null : args[0];
+			
 			//set registry, bind stub to it
-			Registry registry = LocateRegistry.getRegistry();
+			Registry registry = LocateRegistry.getRegistry(host);
             registry.bind("Bank", object);
 
             System.out.println("Server ready");
