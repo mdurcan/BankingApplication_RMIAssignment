@@ -131,11 +131,13 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 			
 			//BankInterface stub = (BankInterface) UnicastRemoteObject.exportObject(object, 0);
 			
-			String host = (args.length < 1) ? null : args[0];
+			int hostport = (args.length < 1) ? 7777 : args[0]; // Using 7777 as the default port if none is specified
 			
-			//set registry, bind stub to it
-			Registry registry = LocateRegistry.getRegistry(host);
-            registry.bind("Bank", object);
+			// Starting the RMI registry to use in our application
+			// Don't need to start RMI registry before running the server with this command
+			LocateRegistry.createRegistry(hostport); 
+			Registry registry = LocateRegistry.getRegistry(hostport); // Getting a registry to use in this application
+            registry.bind("Bank", object); // Binding our application to this registry.
 
             System.out.println("Server ready");
 			
