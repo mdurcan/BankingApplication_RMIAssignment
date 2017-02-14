@@ -92,7 +92,7 @@ public class Account {
 		//gets the transaction
 		for(Transaction transaction : transactions){
 			// getting the transaction between the dates
-			if(start.after(transaction.GetDate()) && end.before(transaction.GetDate())){
+			if(start.after(transaction.GetDate()) &&  end.before(transaction.GetDate())){
 				newList.add(transaction);
 			}
 		}

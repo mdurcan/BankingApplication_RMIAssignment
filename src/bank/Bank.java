@@ -121,9 +121,10 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 		for(Account account : accounts){ 
 			if(accountnum == account.GetAccountNum()){ // Find account using the account number
 				status = (account.GetSessionID() != 0) ? true : false; // True = active session, False = inactive session
+				return status;
 			}
 		}
-		return false; // If no account with the corresponding account number is found, no session can be active
+		throw new InvalidSession("error"); // If no account with the corresponding account number is found, no session can be active
 	}
 	
 	public static void main(String args[]) throws Exception{

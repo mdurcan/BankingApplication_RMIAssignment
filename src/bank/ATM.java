@@ -33,7 +33,7 @@ public class ATM {
 			Scanner in = new Scanner(System.in);
 			String command;
 			
-			while(true){ // Loop while the session ID is still valid // stub.sessionStatus(accNum)
+			while(stub.sessionStatus(accNum)){ // Loop while the session ID is still valid // stub.sessionStatus(accNum)
 				command = in.nextLine();
 				System.out.println("Command entered: " + command + "\n");
 				
@@ -63,9 +63,13 @@ public class ATM {
 					Date to = new Date(Integer.parseInt(dateTo[2]), Integer.parseInt(dateTo[1]), Integer.parseInt(dateTo[0])); 
 					Date from = new Date(Integer.parseInt(dateFrom[2]), Integer.parseInt(dateFrom[1]), Integer.parseInt(dateFrom[0])); 
 					
-					Statement statement = stub.getStatement(accNum, to, from, sessionID); // Execute statement
+					Statement statement = stub.getStatement(accNum, from, to, sessionID); // Execute statement
 					printStatement(statement);
 					System.out.println("Statement printed");
+				}
+				
+				else if(operation.equals("exit")){
+					break;
 				}
 				
 				else{
@@ -83,7 +87,6 @@ public class ATM {
 	**/
 	private static void printStatement(Statement s){
 		List<Transaction> transactions = s.getTransactions();
-		
 		// For each transaction, print out its details
 		for(Transaction t:transactions){
 			System.out.println("\n\nTransaction date: " + t.GetDate().toString());
