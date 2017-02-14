@@ -23,7 +23,7 @@ public class Statement implements StatementInterface{
 	}
 	
 	
-	public int getAccountnum() {
+	public int getAccountNum() {
 		return Accountnum;
 	}
 
@@ -43,7 +43,7 @@ public class Statement implements StatementInterface{
 	}
 
 	
-	public List getTransations() {
+	public List getTransactions() {
 		return Transactions;
 	}
 

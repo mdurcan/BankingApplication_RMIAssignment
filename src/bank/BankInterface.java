@@ -15,5 +15,5 @@ public interface BankInterface extends Remote{
 	public void withdraw(int accountnum, int amount, long sessionID) throws RemoteException, InvalidSession;
 	public int inquiry(int accountnum, long sessionID) throws RemoteException, InvalidSession;
 	public Statement getStatement(int accountnum,Date from, Date to, long sessionID) throws RemoteException, InvalidSession;
-	
+	public boolean sessionStatus(int accountnum) throws RemoteException, InvalidSession; // Method to check whether an account's session is active
 }

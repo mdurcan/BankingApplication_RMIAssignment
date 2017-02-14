@@ -81,7 +81,6 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 			}
 		}
 	}
-
 	
 	public int inquiry(int accountnum, long sessionID) throws RemoteException, InvalidSession {
 		//finds account
@@ -99,7 +98,6 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 		}
 		throw new InvalidSession();
 	}
-
 	
 	public Statement getStatement(int accountnum, Date from, Date to, long sessionID) throws RemoteException, InvalidSession {
 		//finds account
@@ -118,16 +116,26 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
 		throw new InvalidSession();
 	}
 	
+	public boolean sessionStatus(int accountnum) throws RemoteException, InvalidSession {
+		boolean status;
+		for(Account account : accounts){ 
+			if(accountnum == account.GetAccountNum()){ // Find account using the account number
+				status = (account.GetSessionID() != 0) ? true : false; // True = active session, False = inactive session
+			}
+		}
+		return false; // If no account with the corresponding account number is found, no session can be active
+	}
+	
 	public static void main(String args[]) throws Exception{
 		try{
 			//Initialize Bank
 			Bank object = new Bank();
 			//add accounts
-			object.accounts.add(new Account("user1","abc","user1"));
-			object.accounts.add(new Account("user2","123","user2"));
-			object.accounts.add(new Account("user3","1a2b","user3"));
-			object.accounts.add(new Account("user4","xyz","user4"));
-			object.accounts.add(new Account("user5","password","user5"));
+			object.accounts.add(new Account("user1","abc","user1", 1));
+			object.accounts.add(new Account("user2","123","user2", 2));
+			object.accounts.add(new Account("user3","1a2b","user3", 3));
+			object.accounts.add(new Account("user4","xyz","user4", 4));
+			object.accounts.add(new Account("user5","password","user5", 5));
 			
 			//BankInterface stub = (BankInterface) UnicastRemoteObject.exportObject(object, 0);
 			
@@ -146,5 +154,4 @@ public class Bank extends UnicastRemoteObject implements BankInterface{
             e.printStackTrace();
 		}
 	}
-
 }

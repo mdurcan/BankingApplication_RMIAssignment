@@ -21,15 +21,14 @@ public class Account {
 	private Date dateOfSession;
 	
 	//Constructor
-	public Account(String username, String password, String accName){
+	public Account(String username, String password, String accName, int accNum){
 		//set details
 		UserName = username;
 		Password = password;
 		AccountName = accName;
 		
 		//assign account number
-		AccountNum = nextAccNum;
-		nextAccNum++;
+		AccountNum = accNum;
 		//start balance
 		Balance = 0;
 		
@@ -58,7 +57,7 @@ public class Account {
 	
 	public long GetSessionID(){
 		//see how long has passed since session started
-		long timeLasped = (dateOfSession.getTime()-new Date().getTime())/(60*1000)%60;
+		long timeLasped = ((dateOfSession.getTime()-new Date().getTime())/(1000/60));
 		//if more then 5 minutes the session ends
 		if(timeLasped>=5){
 			System.err.println("session has timed out");
