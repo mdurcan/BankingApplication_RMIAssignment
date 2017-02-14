@@ -15,7 +15,6 @@ public class ATM {
         try {
             Registry registry = LocateRegistry.getRegistry(hostname, hostport);
             BankInterface stub = (BankInterface) registry.lookup("Bank");
-			System.out.println("Stub created");
 			
 			int accNum = (args.length < 4) ? 0 : Integer.parseInt(args[3]); // Check for account number
 			String username = (args.length < 5) ? null : args[4]; // Check for username
@@ -29,18 +28,18 @@ public class ATM {
 			// Execute login command with username and password, get sessionID
 			long sessionID = stub.login(username, password);
 			
+			System.out.println("Login on account " + accNum + " successful.\nYou have 5 minutes until force logout.");
+			
 			// Create scanner to retrieve user's commands
 			Scanner in = new Scanner(System.in);
 			String command;
 			
 			while(stub.sessionStatus(accNum)){ // Loop while the session ID is still valid // stub.sessionStatus(accNum)
 				command = in.nextLine();
-				System.out.println("Command entered: " + command + "\n");
 				
 				// Split command into an operation and arguments
 				String[] splitCommand = command.split(" ");
 				operation = splitCommand[0];
-				System.out.println("operation: " + operation);
 				
 				if(operation.equals("deposit")){
 					System.out.println("Depositing " + splitCommand[1] + " to account " + accNum);
@@ -48,6 +47,7 @@ public class ATM {
 				}
 				
 				else if(operation.equals("withdraw")){
+					System.out.println("Withdrawing " + splitCommand[1] + " from account " + accNum);
 					stub.withdraw(accNum, Integer.parseInt(splitCommand[1]), sessionID); // Execute withdrawal
 				}
 				
